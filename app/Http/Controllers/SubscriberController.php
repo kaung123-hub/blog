@@ -136,9 +136,9 @@ class SubscriberController extends Controller
       else {
         $data = array('email'=>$subscriber->email,'name'=>$subscriber->name);
 
-        $email = $subscriber->email;
+        $id = $subscriber->id;
     
-        Subscriber::where('email',)->update(['status'=> '1','confirmation_code'=> 'Confirmed']);
+        Subscriber::where('id',$id)->update(['status'=> '1','confirmation_code'=> 'Confirmed']);
 
         Mail::send('mails.mail_success', $data, function($message) use ($subscriber) {
            $message->to($subscriber->email,$subscriber->name)->subject
