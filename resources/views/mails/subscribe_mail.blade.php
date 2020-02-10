@@ -37,7 +37,7 @@
                                         <tr style="margin:0;padding:0;border-collapse:collapse;border-spacing:0;">
                                           <td style="margin:0;padding:0;border-collapse:collapse;border-spacing:0;">
                                             <div style="margin:0;padding:0;text-align: center;width: 100%;">
-                                              <a href="http://localhost:8000/confirmation" target="_blank" class="cta-button" style="margin:0;padding:0;display:inline-block;background:#8799f6;color:#fff;text-decoration:none;padding:15px 25px;border-radius:5px;font-size:14px;letter-spacing:1px;font-weight:100;margin:20px auto;">Confirm</a>                                              </div>
+                                              <a href="http://localhost:8000/mail-confirmation" target="_blank" class="cta-button" style="margin:0;padding:0;display:inline-block;background:#8799f6;color:#fff;text-decoration:none;padding:15px 25px;border-radius:5px;font-size:14px;letter-spacing:1px;font-weight:100;margin:20px auto;">Confirm</a>                                              </div>
                                           </td>
                                         </tr>
                                       </tbody>

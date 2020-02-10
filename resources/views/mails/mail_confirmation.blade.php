@@ -17,30 +17,33 @@
         font-size: 18px;
         }
 
-        .container {
-        width: 800px;
-        margin:0 auto;
-        padding: 100px;
-        background:#FFF;         
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <label for="vcode1">Enter 4-digit verification code</label>
-        <form action="{{url('confirmationemail')}}" method="POST">
+    <br><br><br><br>
+    <div class="container text-center my-5 card px-5 py-5 shadow-lg rounded w-50">
+        <h1 class="text-danger">Confirmation Subscriber</h1><br><br>
+        <label for="vcode1" class="text-danger">Enter 6-digit verification code</label><br><br>
+        <form action="{{route('mail.confirmation')}}" id="myForm" method="POST">
+        @csrf
             <div class="vcode" id="vcode">
                 <input type="phone" name="digit1" class="vcode-input" maxlength="1" id="vcode1">
                 <input type="phone" name="digit2" class="vcode-input" maxlength="1">
                 <input type="phone" name="digit3" class="vcode-input" maxlength="1">
                 <input type="phone" name="digit4" class="vcode-input" maxlength="1">
                 <input type="phone" name="digit5" class="vcode-input" maxlength="1">
-                <input type="phone" name="digit6" class="vcode-input" maxlength="1"><br><br>
-                <input type="submit" class="btn btn-primary" value="Submit">
+                <input type="phone" name="digit6" class="vcode-input" maxlength="1"><br><br><br>
+                <input type="button" onclick="myFunction()" value="Reset" class="btn btn-warning">
+                <input type="submit" class="btn btn-danger mx-auto" value="Submit">
             </div>
         </form>
     </div>
     <script>
+
+        function myFunction() {
+        document.getElementById("myForm").reset();
+        }
+
         var vcode = (function () {
         //cache dom
         var $inputs = $("#vcode").find("input");

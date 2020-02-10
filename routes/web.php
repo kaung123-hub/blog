@@ -30,7 +30,6 @@ Route::get('/sendhtmlemail','MailController@html_email');
 
 Route::resource('subscribers','SubscriberController')->only(['store']);
 
-Route::get('/confirmation','SubscriberController@confirmation');
+Route::get('mail-confirmation','SubscriberController@mail_confirmation');
 
-Route::post('/confirmationEmail', 'SubscriberController@confirmationEmail');
-
+Route::post('mail-confirmation','SubscriberController@confirmation')->name('mail.confirmation');

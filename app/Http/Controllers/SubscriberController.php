@@ -19,9 +19,9 @@ class SubscriberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function confirmation()
+    public function index()
     {
-        return view('mail_confirmation');
+        //
     }
 
     /**
@@ -29,9 +29,9 @@ class SubscriberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function confirmationEmail()
+    public function create()
     {
-        return ("COnfirmation successful!!");
+        //
     }
 
     /**
@@ -61,7 +61,7 @@ class SubscriberController extends Controller
 
             session()->flash('status4','Please Check Your Email Inbox to Varify');
             $data = array('name'=>'Blog Application','username'=>$request->name,'email'=>$request->email,'confirmation_code'=>$confirmation_code);
-            Mail::send('subscribe_mail',$data,function($message) use ($request){
+            Mail::send('mails.subscribe_mail',$data,function($message) use ($request){
                 $message->to($request->email,$request->name)->subject
                 ('Subscriber Created Mail');
                 $message->from('hyugoyabuto@gmail.com','Blog Application');
@@ -118,4 +118,36 @@ class SubscriberController extends Controller
     {
         //
     }
+
+        public function mail_confirmation()
+    {
+      return view('mails.mail_confirmation');
+    }
+
+    public function confirmation(Request $request){
+      $confirmation_code = $request->digit1.$request->digit2.$request->digit3.$request->digit4.$request->digit5.$request->digit6;
+
+      $subscriber = Subscriber::where('confirmation_code', '=', $confirmation_code)->first();
+      if ($subscriber === null) {
+        return view('mails.mail_confirmation');
+         // user doesn't exist
+      }
+
+      else {
+        $data = array('email'=>$subscriber->email,'name'=>$subscriber->name);
+
+        $email = $subscriber->email;
+    
+        Subscriber::where('email',)->update(['status'=> '1','confirmation_code'=> 'Confirmed']);
+
+        Mail::send('mails.mail_success', $data, function($message) use ($subscriber) {
+           $message->to($subscriber->email,$subscriber->name)->subject
+              ('Subscription Success');
+           $message->from('hyugoyabuto@gmail.com','ITVisionHub Feed Zone');
+        });
+
+        echo "Check your mail";
+      }
+    }
+
 }
