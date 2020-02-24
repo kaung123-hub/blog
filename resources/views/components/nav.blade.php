@@ -21,7 +21,9 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{url('blog-posts')}}">View All Posts</a>
+                        @if(Auth::user())
                         <a class="dropdown-item" href="{{route('blog-posts.create')}}">Create Posts</a>
+                        @endif
                     </div>
                 </li>
                 </ul>

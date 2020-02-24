@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreBlogPost;
 use App\BlogPost;
 use App\Subscriber;
+use App\Comment;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Mail;
+
 class BlogPostController extends Controller
 {
     /**
@@ -49,10 +52,10 @@ class BlogPostController extends Controller
       // $blogPost->view=0;
       // $blogPost->save();
       $users = Subscriber::all();
-      BlogPost::create(['title'=>$request->title,'author'=>$request->author,'content'=>$request->content]);
+      BlogPost::create(['title'=>$request->title,'author'=>Auth::user()->name,'content'=>$request->content]);
       session()->flash('status','New posts is created.');
       $id = DB::table('blog_posts')->orderBy('created_at','desc')->first();
-      $data = array('name'=>"Blog Application",'author'=>$request->author,'content'=>$request->content,'title'=>$request->title,'id'=>$id->id);
+      $data = array('name'=>"Blog Application",'author'=>Auth::user()->name,'content'=>$request->content,'title'=>$request->title,'id'=>$id->id);
       foreach($users as $user){
       Mail::send('mail', $data, function($message) use($user){
       $message->to($user->email, $user->name)->subject
@@ -73,7 +76,7 @@ class BlogPostController extends Controller
     {
       $blogPost=BlogPost::find($id);
       BlogPost::where('id',$id)->update(['view'=>$blogPost->view+1]);
-        return view('blogposts.show',['post'=>BlogPost::find($id)]);
+      return view('blogposts.show',['post'=>BlogPost::find($id)]);
     }
 
     /**
@@ -98,7 +101,7 @@ class BlogPostController extends Controller
     public function update(Request $request, $id)
     {   
         $blogUpdate = BlogPost::find($id);
-        BlogPost::where('id',$id)->update(['title'=>$request->title,'author'=>$request->author,'content'=>$request->content]);
+        BlogPost::where('id',$id)->update(['title'=>$request->title,'author'=>Auth::user()->name,'content'=>$request->content]);
         session()->flash('status2','The '.$blogUpdate->author.' of '.$blogUpdate->title.' is updated.');
         return redirect()->route('blog-posts.show',['blog_post'=>$id]);
     }

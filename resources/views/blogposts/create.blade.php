@@ -25,12 +25,6 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="colFormLabel" class="col-sm-2 col-form-label text-primary">Author</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="colFormLabel" name="author" placeholder="Author" value="{{old('author')}}">
-    </div>
-  </div>
-  <div class="form-group row">
     <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-primary">Content</label>
     <div class="col-sm-10">
       <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3" >{{old('content')}}</textarea>

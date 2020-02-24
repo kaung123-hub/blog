@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
 // Route::resource('blog-posts','BlogPostController')->only(['index','show','create','store','edit','update']); // use funtion only in the parathesis
 
@@ -23,8 +23,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('blog-posts','BlogPostController');
+    
 });
+
+Route::resource('blog-posts','BlogPostController');
 
 Route::get('/sendhtmlemail','MailController@html_email');
 
@@ -33,3 +35,5 @@ Route::resource('subscribers','SubscriberController')->only(['store']);
 Route::get('mail-confirmation','SubscriberController@mail_confirmation');
 
 Route::post('mail-confirmation','SubscriberController@confirmation')->name('mail.confirmation');
+
+Route::resource('comments','CommentController')->only(['store']);

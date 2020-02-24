@@ -4,7 +4,9 @@
 
   <br>
    <div class="container">
-    <a class="btn btn-danger float-right text-light" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Subscribe</a><br><br>
+    @if(!Auth::user())
+      <a class="btn btn-danger float-right text-light" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Subscribe</a><br><br>
+    @endif
     @if(session()->has('status'))
       <div class="col-md-12">
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -27,25 +29,27 @@
     @endif
      <div class="row">
        @forelse ($blogposts as $blogpost)
-       <div class="card col-sm-3.8 mx-3 my-3" style="width: 18rem;">
-         <div class="card-body">
-           <h5 class="card-title">
-           {{$blogpost->title}}
-           </h5>
-           <h6 class="card-subtitle mb-2 text-muted">
-           author-({{$blogpost->author}})
-           </h6>
-           <h6 class="card-subtitle mb-2 text-primary float-right">
-           {{\Carbon\Carbon::parse($blogpost->created_at)->diffForHumans()}}
-           </h6>
-           <p class="card-text">
-             {{implode(' ',array_slice(explode(' ',$blogpost->content),0,15))}}...
-           </p>
-           <a href="#" class="card-link btn btn-warning">View -({{$blogpost->view}})</a>
-           <a href="{{route('blog-posts.show',['blog_post'=>$blogpost->id])}}" class="card-link btn btn-primary float-right">Read More..</a>
-         </div>
-       </div>
-       <br> <br>
+       <div class="card my-3 mx-4" style="width:20rem;">
+        <div class="card-body">
+          <div class="card-title">
+            <span class="float-right text-primary">
+              <i class="fa fa-clock-o text-primary" style="font-size:20px;"></i> {{\Carbon\Carbon::parse($blogpost->created_at)->diffForHumans()}}
+            </span>
+            <h5>
+              {{$blogpost->title}}
+            </h5>
+          </div>
+          
+          <h6 class="card-subtitle mb-2 my-3 text-danger">
+            [ {{$blogpost->author}} ]
+          </h6>
+          <p class="card-text my-3">
+            {{implode(' ', array_slice(explode(' ', $blogpost->content), 0, 15))}} ...
+          </p>
+          <a href="" class="card-link btn btn-warning"> View - {{$blogpost->view}}</a>
+          <a href="{{ route('blog-posts.show',['blog_post'=>$blogpost->id]) }}" class="card-link float-right btn btn-primary"> Read More</a>
+        </div>
+      </div>
        @empty
 
        <div class="jumbotron col-md-12">
@@ -56,7 +60,9 @@
        </div>
 
        @endforelse
-       {{ $blogposts->links() }}
+       <div class="mx-auto">
+          {{ $blogposts->links() }}
+       </div>
      </div>
    </div>
 
